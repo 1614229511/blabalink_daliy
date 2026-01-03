@@ -12,7 +12,7 @@ async def main():
         browser = await p.chromium.launch_persistent_context(
             user_data_dir=BOT_PROFILE,
             channel='msedge',
-            headless=False,
+            headless=True,
             args=['--disable-blink-features=AutomationControlled']
         )
         page = browser.pages[0] if browser.pages else await browser.new_page()
