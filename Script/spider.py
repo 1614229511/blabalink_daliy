@@ -24,7 +24,7 @@ async def login_blablalink(page: Page):
     # 截图
     await page.screenshot(path="cookie.png")
 
-    if await (cookie_btn := page.get_by_role("button", name="接受所有可選 cookies")).is_visible(timeout=2000):
+    if await (cookie_btn := page.get_by_role("button", name="接受所有可選 cookies")).is_visible():
         try:
             await cookie_btn.click(force=True)
             await cookie_btn.wait_for(state="hidden", timeout=2000)
@@ -35,8 +35,17 @@ async def login_blablalink(page: Page):
     await page.screenshot(path="cookie_finish.png")
     await page.locator("img").nth(1).click()
     await page.screenshot(path="login_begin.png")
-    # 有可能默认选择好地区了
-    if await (loc := page.get_by_role("listitem").filter(has_text="日本/韓國/北美/東南亞/全球")).is_visible(timeout=2000): await loc.click()
+
+    # 地区选择
+    loc = page.get_by_role("listitem").filter(has_text="日本/韓國/北美/東南亞/全球")
+    try:
+        # 这里的 timeout 才是真正的阻塞等待 2000ms
+        await loc.wait_for(state="visible", timeout=2000)
+        await loc.click()
+    except:
+        # 2秒到了还没出，就当它已经默认选好了
+        pass
+
     await page.get_by_role("textbox", name="電郵地址").click()
     await page.get_by_role("textbox", name="電郵地址").fill(os.getenv("ACCOUNT"))
     await page.get_by_role("textbox", name="電郵地址").press("Tab")
