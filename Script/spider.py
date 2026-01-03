@@ -88,5 +88,12 @@ async def get_rewards(page: Page):
     await page.screenshot(path="reward.png")
 
     await page.locator(".w-\\[24px\\].h-\\[24px\\].bg-\\[length\\:100\\%_100\\%\\]").first.click()
-    await page.wait_for_timeout(2000)
-    await page.screenshot(path="final_state.png")
+    success_msg = page.get_by_text("簽到成功")
+    try:
+        # 等它出现，顺便看看它到底长什么样
+        await success_msg.wait_for(state="visible", timeout=5000)
+        print("弹窗内容是:", await success_msg.inner_text())
+    except:
+        print("没抓到弹窗，可能消失太快或还没出来")
+
+    await page.screenshot(path="reward_state.png")
