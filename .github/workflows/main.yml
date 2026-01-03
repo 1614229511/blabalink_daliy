@@ -3,7 +3,7 @@ name: MyAutoTask  # 任务名字
 on:
   workflow_dispatch: # 重点：这行能让你在网页上点按钮手动触发，调试必备
   schedule:
-    - cron: '0 22 * * *' # 每天北京时间早上6点跑（UTC 22:00）
+    - cron: '0 2 * * *' # 北京时间 10:00 (UTC 02:00)
 
 jobs:
   build:
