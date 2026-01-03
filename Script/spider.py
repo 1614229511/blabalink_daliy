@@ -24,12 +24,12 @@ async def login_blablalink(page: Page):
     # 截图
     await page.screenshot(path="cookie.png")
 
-    if await (cookie_btn := page.get_by_role("button", name="接受所有可選 cookies")).is_visible():
+    if await (cookie_btn := page.get_by_role("button", name="接受所有可選 cookies")).is_visible(timeout=2000):
         await cookie_btn.click()
 
     await page.locator("img").nth(1).click()
     # 有可能默认选择好地区了
-    if await (loc := page.get_by_role("listitem").filter(has_text="日本/韓國/北美/東南亞/全球")).is_visible(): await loc.click()
+    if await (loc := page.get_by_role("listitem").filter(has_text="日本/韓國/北美/東南亞/全球")).is_visible(timeout=2000): await loc.click()
     await page.get_by_role("textbox", name="電郵地址").click()
     await page.get_by_role("textbox", name="電郵地址").fill(os.getenv("ACCOUNT"))
     await page.get_by_role("textbox", name="電郵地址").press("Tab")
