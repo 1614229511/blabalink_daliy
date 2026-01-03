@@ -25,15 +25,16 @@ async def login_blablalink(page: Page):
     await page.screenshot(path="cookie.png")
 
     if await (cookie_btn := page.get_by_role("button", name="接受所有可選 cookies")).is_visible(timeout=2000):
-        print("发现cookies弹窗...")
         try:
             await cookie_btn.click(force=True)
             await cookie_btn.wait_for(state="hidden", timeout=2000)
             print("弹窗已消失")
         except:
             print("弹窗未出现或无法点击，跳过")
-    print("点击登录头像...")
+
+    await page.screenshot(path="cookie_finish.png")
     await page.locator("img").nth(1).click()
+    await page.screenshot(path="login_begin.png")
     # 有可能默认选择好地区了
     if await (loc := page.get_by_role("listitem").filter(has_text="日本/韓國/北美/東南亞/全球")).is_visible(timeout=2000): await loc.click()
     await page.get_by_role("textbox", name="電郵地址").click()
