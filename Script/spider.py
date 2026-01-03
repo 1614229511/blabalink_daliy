@@ -21,6 +21,9 @@ async def browse(page: Page, post_count: int = 5):
 
 async def login_blablalink(page: Page):
     """通过blablalink账户登录"""
+    # 截图
+    await page.screenshot(path="cookie.png")
+
     if await (cookie_btn := page.get_by_role("button", name="接受所有可選 cookies")).is_visible():
         await cookie_btn.click()
 
