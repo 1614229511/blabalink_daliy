@@ -1,3 +1,5 @@
+import os
+
 from playwright.async_api import Page
 
 import setting
@@ -26,9 +28,9 @@ async def login_blablalink(page: Page):
     await page.locator("img").nth(1).click()
     await page.get_by_role("listitem").filter(has_text="日本/韓國/北美/東南亞/全球").click()
     await page.get_by_role("textbox", name="電郵地址").click()
-    await page.get_by_role("textbox", name="電郵地址").fill(setting.ACCOUNT)
+    await page.get_by_role("textbox", name="電郵地址").fill(os.getenv("ACCOUNT"))
     await page.get_by_role("textbox", name="電郵地址").press("Tab")
-    await page.get_by_role("textbox", name="密碼").fill(setting.PASSWORD)
+    await page.get_by_role("textbox", name="密碼").fill(os.getenv("PASSWORD"))
     await page.get_by_role("button", name="登入", exact=True).click()
 
     await page.wait_for_selector(".w-full.h-full", state="visible", timeout=15000)
