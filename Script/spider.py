@@ -5,6 +5,7 @@ from playwright.async_api import Page
 
 async def browse(page: Page, post_count: int = 5):
     """浏览帖子"""
+    print("开始浏览帖子...")
     for i in range(post_count):
         target = page.locator("div[data-cname='infinite-scroll'] > div").nth(i).locator("> div").nth(1)
         await target.click()
@@ -34,6 +35,7 @@ async def login_blablalink(page: Page):
     await page.screenshot(path="login.png")
 
     await page.wait_for_selector(".w-full.h-full", state="visible", timeout=15000)
+    print("账户登录结束...")
 
 async def like(page: Page, post_count: int = 5):
     """点赞未点赞过的帖子"""
