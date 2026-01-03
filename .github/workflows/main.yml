@@ -37,6 +37,6 @@ jobs:
         if: always() # 确保即使脚本报错了，也要上传截图
         uses: actions/upload-artifact@v4
         with:
-          name: debug-screenshots # 下载时的压缩包名字
-          path: ./*.png           # 上传根目录下所有 png 图片
+          name: debug-screenshots
+          path: "**/*.png" # 暴力搜索所有子目录下的 png
           retention-days: 5       # 图片保存天数

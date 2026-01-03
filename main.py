@@ -21,6 +21,7 @@ async def main():
         # if not await page.wait_for_selector(".w-full.h-full", state="visible", timeout=15000):
         #     print("正在打开登录页面...")
         #     await login_blablalink(page)
+
         # 截图
         await page.screenshot(path="main.png")
         await login_blablalink(page)
